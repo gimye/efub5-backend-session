@@ -31,7 +31,7 @@ public class AccountController {
 //    public ResponseEntity<CreateAccountResponseDto> createAccount() {
 //    }
 //
-//    // 계정 프로필(자기소개) 수정: PATCH /accounts/{accountId}
+//    // 계정 프로필(자기소개) 수정: PATCH /accounts/profile/{accountId}
 //    @PatchMapping("/profile/{accountId}")
 //    public ResponseEntity<AccountResponseDto> updateAccount() {
 //    }

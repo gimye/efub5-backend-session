@@ -10,7 +10,10 @@ public class GlobalExceptionHandler {
 
 //    @ExceptionHandler(IllegalArgumentException.class)
 //    public ResponseEntity<ErrorResponseDto> handleIllegalArgument(IllegalArgumentException ex) {
-//        ErrorResponseDto error = new ErrorResponseDto(ex.getMessage(), HttpStatus.BAD_REQUEST.value());
+//        ErrorResponseDto error = ErrorResponseDto.builder()
+//                .message(ex.getMessage())
+//                .status(HttpStatus.BAD_REQUEST.value())
+//                .build();
 //        return ResponseEntity.badRequest().body(error);
 //    }
 }
