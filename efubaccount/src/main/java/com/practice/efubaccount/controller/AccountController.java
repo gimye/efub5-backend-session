@@ -11,9 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @RestController
 @RequestMapping("/accounts")
 @RequiredArgsConstructor
@@ -45,19 +42,15 @@ public class AccountController {
 
     // 계정 논리적 삭제(탈퇴): PATCH /accounts/{accountId}
     @PatchMapping("/{accountId}")
-    public ResponseEntity<Map<String, String>> deleteAccount(@PathVariable("accountId") Long accountId) {
+    public ResponseEntity<String> deleteAccount(@PathVariable("accountId") Long accountId) {
         accountsService.deleteAccount(accountId);  // 상태 변경만 수행
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "성공적으로 탈퇴되었습니다.");
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok("message : 성공적으로 탈퇴되었습니다.");
     }
 
     // 계정 물리적 삭제: DELETE /accounts/{accountId}
     @DeleteMapping("/{accountId}")
-    public ResponseEntity<Map<String, String>> physicalDeleteAccount(@PathVariable("accountId") Long accountId) {
+    public ResponseEntity<String> physicalDeleteAccount(@PathVariable("accountId") Long accountId) {
         accountsService.physicalDeleteAccount(accountId);
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "성공적으로 탈퇴되었습니다.");
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok("message : 성공적으로 탈퇴되었습니다.");
     }
 }
