@@ -1,16 +1,13 @@
 package com.practice.efubaccount.dto;
 
 import com.practice.efubaccount.entity.Account;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
 // Account 조회 후 응답 DTO
 
 @Builder @Getter
-@AllArgsConstructor
 public class AccountResponseDto {
-
     private String nickname;
     private String email;
     private String bio;
