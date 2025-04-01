@@ -43,8 +43,7 @@ public class AccountsService {
         Account account = accountsRepository.findByAccountId(accountId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 회원을 찾을 수 없습니다."));
         account.updateBio(requestDto.getBio());
-        Account updatedAccount = accountsRepository.save(account);
-        return AccountResponseDto.from(updatedAccount);
+        return AccountResponseDto.from(account);
     }
 
     // 회원 논리적 삭제 (status 변경)
