@@ -19,30 +19,41 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AccountController {
 
-//    private final AccountsService accountsService;
-//
-//    // 회원 조회: GET /accounts/{accountId}
-//    @GetMapping("/{accountId}")
-//    public ResponseEntity<AccountResponseDto> getAccount() {
-//    }
-//
-//    // 계정 생성 POST /accounts
-//    @PostMapping
-//    public ResponseEntity<CreateAccountResponseDto> createAccount() {
-//    }
-//
-//    // 계정 프로필(자기소개) 수정: PATCH /accounts/profile/{accountId}
-//    @PatchMapping("/profile/{accountId}")
-//    public ResponseEntity<AccountResponseDto> updateAccount() {
-//    }
-//
-//    // 계정 논리적 삭제(탈퇴): PATCH /accounts/{accountId}
-//    @PatchMapping("/{accountId}")
-//    public ResponseEntity<String> deleteAccount() {
-//    }
-//
-//    // 계정 물리적 삭제: DELETE /accounts/{accountId}
-//    @DeleteMapping("/{accountId}")
-//    public ResponseEntity<String> physicalDeleteAccount() {
-//    }
+    private final AccountsService accountsService;
+
+    // 회원 조회: GET /accounts/{accountId}
+    @GetMapping("/{accountId}")
+    public ResponseEntity<AccountResponseDto> getAccount(@PathVariable("accountId") Long accountId) {
+        AccountResponseDto responseDto = accountsService.getAccount(accountId);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    // 계정 생성 POST /accounts
+    @PostMapping
+    public ResponseEntity<CreateAccountResponseDto> createAccount(@RequestBody @Valid CreateAccountRequestDto requestDto) {
+        CreateAccountResponseDto responseDto = accountsService.createAccount(requestDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
+    }
+
+    // 계정 프로필(자기소개) 수정: PATCH /accounts/profile/{accountId}
+    @PatchMapping("/profile/{accountId}")
+    public ResponseEntity<AccountResponseDto> updateAccount(@PathVariable("accountId") Long accountId,
+                                                            @RequestBody @Valid BioUpdateRequestDto requestDto) {
+        AccountResponseDto responseDto = accountsService.updateAccount(accountId, requestDto);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    // 계정 논리적 삭제(탈퇴): PATCH /accounts/{accountId}
+    @PatchMapping("/{accountId}")
+    public ResponseEntity<String> deleteAccount(@PathVariable("accountId") Long accountId) {
+        accountsService.deleteAccount(accountId);  // 상태 변경만 수행
+        return ResponseEntity.ok("message : 성공적으로 탈퇴되었습니다.");
+    }
+
+    // 계정 물리적 삭제: DELETE /accounts/{accountId}
+    @DeleteMapping("/{accountId}")
+    public ResponseEntity<String> physicalDeleteAccount(@PathVariable("accountId") Long accountId) {
+        accountsService.physicalDeleteAccount(accountId);
+        return ResponseEntity.ok("message : 성공적으로 탈퇴되었습니다.");
+    }
 }

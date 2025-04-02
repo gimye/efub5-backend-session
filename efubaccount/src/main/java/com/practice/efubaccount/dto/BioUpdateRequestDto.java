@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BioUpdateRequestDto {
 
-//    @NotBlank
-//    private String bio;
+    @NotBlank
+    private String bio;
 
 }
