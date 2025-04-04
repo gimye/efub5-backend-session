@@ -6,6 +6,7 @@ import com.practice.blog.global.exception.BlogException;
 import com.practice.blog.global.exception.ExceptionCode;
 import com.practice.blog.post.domain.Post;
 import com.practice.blog.post.dto.request.PostCreateRequest;
+import com.practice.blog.post.dto.request.PostUpdateRequest;
 import com.practice.blog.post.dto.response.PostResponse;
 import com.practice.blog.post.dto.response.PostsResponse;
 import com.practice.blog.post.dto.response.PostsResponses;
@@ -48,6 +49,14 @@ public class PostService {
         return new PostsResponses(postsResponses);
     }
 
-
+    @Transactional
+    public void updatePostContent(Long postId, PostUpdateRequest request, String password) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(()-> new BlogException(ExceptionCode.POST_NOT_FOUND));
+        if(!post.getWriter().getPassword().equals(password)) {
+            throw new BlogException(ExceptionCode.POST_ACCOUNT_MISMATCH);
+        }
+        post.changeContent(request.content());
+    }
 
 }

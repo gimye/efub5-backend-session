@@ -2,6 +2,7 @@ package com.practice.blog.post.controller;
 
 import com.practice.blog.post.domain.Post;
 import com.practice.blog.post.dto.request.PostCreateRequest;
+import com.practice.blog.post.dto.request.PostUpdateRequest;
 import com.practice.blog.post.dto.response.PostResponse;
 import com.practice.blog.post.dto.response.PostsResponses;
 import com.practice.blog.post.service.PostService;
@@ -33,5 +34,13 @@ public class PostController {
     @GetMapping("/posts/{id}")
     public ResponseEntity<PostResponse> readPost(@PathVariable("id") Long id){
         return ResponseEntity.ok(postService.readPost(id));
+    }
+
+    @PatchMapping("/posts/{id}")
+    public ResponseEntity<Void> updatePostContent(@PathVariable("id") Long id,
+                                                  @RequestHeader("Authorization") String password,
+                                                  @RequestBody PostUpdateRequest request) {
+        postService.updatePostContent(id, request, password);
+        return ResponseEntity.noContent().build();
     }
 }
