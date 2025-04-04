@@ -43,4 +43,11 @@ public class PostController {
         postService.updatePostContent(id, request, password);
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping("/posts/{id}")
+    public ResponseEntity<Void> deletePost(@PathVariable("id") Long id,
+                                           @RequestHeader("Authorization") String password){
+        postService.deletePost(id, password);
+        return ResponseEntity.noContent().build();
+    }
 }

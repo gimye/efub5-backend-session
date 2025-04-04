@@ -59,4 +59,14 @@ public class PostService {
         post.changeContent(request.content());
     }
 
+    @Transactional
+    public void deletePost(Long postId, String password) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(()-> new BlogException(ExceptionCode.POST_NOT_FOUND));
+        if(!post.getWriter().getPassword().equals(password)) {
+            throw new BlogException(ExceptionCode.POST_ACCOUNT_MISMATCH);
+        }
+        postRepository.delete(post);
+    }
+
 }
