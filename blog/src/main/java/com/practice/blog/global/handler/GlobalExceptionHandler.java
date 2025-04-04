@@ -1,0 +1,36 @@
+package com.practice.blog.global.handler;
+
+import com.practice.blog.account.dto.ErrorResponseDto;
+import com.practice.blog.global.exception.BlogException;
+import com.practice.blog.global.exception.dto.ExceptionResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(BlogException.class)
+    public ResponseEntity<ExceptionResponse> handleBlogException(BlogException exception,
+                                                                 HttpServletRequest request) {
+        ExceptionResponse response = new ExceptionResponse(
+                request.getMethod(),
+                request.getRequestURI(),
+                exception.getClientExceptionCodeName(),
+                exception.getMessage()
+        );
+
+        return ResponseEntity.status(exception.getHttpStatusCode())
+                .body(response);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponseDto> handleIllegalArgument(IllegalArgumentException ex) {
+        ErrorResponseDto error = ErrorResponseDto.builder()
+                .message(ex.getMessage())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .build();
+        return ResponseEntity.badRequest().body(error);
+    }
+}

@@ -1,10 +1,10 @@
-package com.practice.blog.controller;
+package com.practice.blog.account.controller;
 
-import com.practice.blog.dto.AccountResponseDto;
-import com.practice.blog.dto.CreateAccountResponseDto;
-import com.practice.blog.dto.BioUpdateRequestDto;
-import com.practice.blog.dto.CreateAccountRequestDto;
-import com.practice.blog.service.AccountsService;
+import com.practice.blog.account.dto.AccountResponseDto;
+import com.practice.blog.account.dto.CreateAccountResponseDto;
+import com.practice.blog.account.dto.BioUpdateRequestDto;
+import com.practice.blog.account.dto.CreateAccountRequestDto;
+import com.practice.blog.account.service.AccountsService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

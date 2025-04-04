@@ -1,6 +1,6 @@
-package com.practice.blog.repository;
+package com.practice.blog.account.repository;
 
-import com.practice.blog.entity.Account;
+import com.practice.blog.account.entity.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

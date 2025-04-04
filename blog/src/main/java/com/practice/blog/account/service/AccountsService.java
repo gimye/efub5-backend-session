@@ -1,12 +1,12 @@
-package com.practice.blog.service;
+package com.practice.blog.account.service;
 
-import com.practice.blog.dto.AccountResponseDto;
-import com.practice.blog.dto.CreateAccountResponseDto;
-import com.practice.blog.dto.BioUpdateRequestDto;
-import com.practice.blog.dto.CreateAccountRequestDto;
-import com.practice.blog.entity.Account;
-import com.practice.blog.entity.AccountStatus;
-import com.practice.blog.repository.AccountsRepository;
+import com.practice.blog.account.dto.AccountResponseDto;
+import com.practice.blog.account.dto.CreateAccountResponseDto;
+import com.practice.blog.account.dto.BioUpdateRequestDto;
+import com.practice.blog.account.dto.CreateAccountRequestDto;
+import com.practice.blog.account.entity.Account;
+import com.practice.blog.account.entity.AccountStatus;
+import com.practice.blog.account.repository.AccountsRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

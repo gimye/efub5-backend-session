@@ -1,6 +1,6 @@
-package com.practice.blog.dto;
+package com.practice.blog.account.dto;
 
-import com.practice.blog.entity.Account;
+import com.practice.blog.account.entity.Account;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

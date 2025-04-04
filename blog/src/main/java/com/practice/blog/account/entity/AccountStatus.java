@@ -1,4 +1,4 @@
-package com.practice.blog.entity;
+package com.practice.blog.account.entity;
 
 public enum AccountStatus {
     DEACTIVATED, ACTIVE

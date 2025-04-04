@@ -1,4 +1,4 @@
-package com.practice.blog.entity;
+package com.practice.blog.account.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
