@@ -2,6 +2,7 @@ package com.practice.blog.global.handler;
 
 import com.practice.blog.account.dto.ErrorResponseDto;
 import com.practice.blog.global.exception.BlogException;
+import com.practice.blog.global.exception.ExceptionCode;
 import com.practice.blog.global.exception.dto.ExceptionResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -32,5 +33,17 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST.value())
                 .build();
         return ResponseEntity.badRequest().body(error);
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ExceptionResponse> handleRuntimeException(RuntimeException runtimeException,
+                                                                    HttpServletRequest request) {
+        ExceptionResponse response = new ExceptionResponse(
+                request.getMethod(),
+                request.getRequestURI(),
+                ExceptionCode.INTERNAL_SERVER_ERROR.getClientExceptionCode().name(),
+                ExceptionCode.INTERNAL_SERVER_ERROR.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(response);
     }
 }

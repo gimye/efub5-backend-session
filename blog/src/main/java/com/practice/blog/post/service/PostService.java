@@ -6,10 +6,15 @@ import com.practice.blog.global.exception.BlogException;
 import com.practice.blog.global.exception.ExceptionCode;
 import com.practice.blog.post.domain.Post;
 import com.practice.blog.post.dto.request.PostCreateRequest;
+import com.practice.blog.post.dto.response.PostResponse;
+import com.practice.blog.post.dto.response.PostsResponse;
+import com.practice.blog.post.dto.response.PostsResponses;
 import com.practice.blog.post.repository.PostRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -27,5 +32,22 @@ public class PostService {
         postRepository.save(newPost);
         return newPost.getId();
     }
+
+    @Transactional
+    public PostResponse readPost(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(()-> new BlogException(ExceptionCode.POST_NOT_FOUND));
+        post.increaseViewCount();
+        return PostResponse.from(post);
+    }
+
+    @Transactional(readOnly = true)
+    public PostsResponses readPosts() {
+        List<PostsResponse> postsResponses = postRepository.findAllByOrderByCreatedAtDesc().stream()
+                .map(PostsResponse::from).toList();
+        return new PostsResponses(postsResponses);
+    }
+
+
 
 }
