@@ -10,6 +10,7 @@ import com.practice.efubaccount.repository.AccountsRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,7 +19,7 @@ public class AccountsService {
     private final AccountsRepository accountsRepository;
 
     // 회원 단건 조회
-    @Transactional
+    @Transactional(readOnly = true)
     public AccountResponseDto getAccount(Long accountId) {
         Account account = accountsRepository.findByAccountId(accountId).orElseThrow(()->new IllegalArgumentException("Account with id " + accountId + " does not exist"));
         return AccountResponseDto.from(account);

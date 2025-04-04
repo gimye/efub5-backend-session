@@ -8,7 +8,6 @@ import lombok.Getter;
 
 @Builder @Getter
 public class AccountResponseDto {
-
     private String nickname;
     private String email;
     private String bio;
