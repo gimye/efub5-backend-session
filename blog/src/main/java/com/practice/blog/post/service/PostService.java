@@ -27,46 +27,56 @@ public class PostService {
     @Transactional
     public Long createPost(PostCreateRequest postCreateRequest) {
         Long accountId = postCreateRequest.accountId();
-        Account writerAccount = accountsRepository.findByAccountId(accountId)
-                .orElseThrow(()-> new BlogException(ExceptionCode.ACCOUNT_NOT_FOUND));
+        Account writerAccount = findByAccountId(accountId);
         Post newPost = postCreateRequest.toEntity(writerAccount);
         postRepository.save(newPost);
         return newPost.getId();
     }
 
     @Transactional
-    public PostResponse readPost(Long postId) {
-        Post post = postRepository.findById(postId)
-                .orElseThrow(()-> new BlogException(ExceptionCode.POST_NOT_FOUND));
+    public PostResponse getPost(Long postId) {
+        Post post = findByPostId(postId);
         post.increaseViewCount();
         return PostResponse.from(post);
     }
 
     @Transactional(readOnly = true)
-    public PostsResponses readPosts() {
+    public PostsResponses getAllPosts() {
         List<PostsResponse> postsResponses = postRepository.findAllByOrderByCreatedAtDesc().stream()
                 .map(PostsResponse::from).toList();
-        return new PostsResponses(postsResponses);
+        return new PostsResponses(postsResponses, postRepository.count());
     }
 
     @Transactional
-    public void updatePostContent(Long postId, PostUpdateRequest request, String password) {
-        Post post = postRepository.findById(postId)
-                .orElseThrow(()-> new BlogException(ExceptionCode.POST_NOT_FOUND));
-        if(!post.getWriter().getPassword().equals(password)) {
-            throw new BlogException(ExceptionCode.POST_ACCOUNT_MISMATCH);
-        }
+    public void updatePostContent(Long postId, PostUpdateRequest request, Long accountId, String password) {
+        Post post = findByPostId(postId);
+        Account account = findByAccountId(accountId);
+        authorizePostWriter(post, account, password);
         post.changeContent(request.content());
     }
 
     @Transactional
-    public void deletePost(Long postId, String password) {
-        Post post = postRepository.findById(postId)
+    public void deletePost(Long postId, Long accountId, String password) {
+        Post post = findByPostId(postId);
+        Account account = findByAccountId(accountId);
+        authorizePostWriter(post, account, password);
+        postRepository.delete(post);
+    }
+
+    private Post findByPostId(Long postId) {
+        return postRepository.findById(postId)
                 .orElseThrow(()-> new BlogException(ExceptionCode.POST_NOT_FOUND));
-        if(!post.getWriter().getPassword().equals(password)) {
+    }
+
+    private Account findByAccountId(Long accountId) {
+        return accountsRepository.findByAccountId(accountId)
+                .orElseThrow(()-> new BlogException(ExceptionCode.ACCOUNT_NOT_FOUND));
+    }
+
+    private void authorizePostWriter(Post post, Account account, String password) {
+        if(!post.getWriter().equals(account) || !post.getWriter().getPassword().equals(password)) {
             throw new BlogException(ExceptionCode.POST_ACCOUNT_MISMATCH);
         }
-        postRepository.delete(post);
     }
 
 }

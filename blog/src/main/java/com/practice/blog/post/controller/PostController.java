@@ -15,39 +15,42 @@ import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/posts")
 public class PostController {
     private final PostService postService;
 
     // 게시물 생성
-    @PostMapping("/posts")
+    @PostMapping
     public ResponseEntity<Void> createPost(@Valid @RequestBody PostCreateRequest request) {
         Long id = postService.createPost(request);
         return ResponseEntity.created(URI.create("/post/"+id)).build();
     }
 
     // 게시물 목록 조회
-    @GetMapping("/posts")
-    public ResponseEntity<PostsResponses> readPost(){
-        return ResponseEntity.ok(postService.readPosts());
+    @GetMapping
+    public ResponseEntity<PostsResponses> getAllPosts(){
+        return ResponseEntity.ok(postService.getAllPosts());
     }
 
-    @GetMapping("/posts/{id}")
-    public ResponseEntity<PostResponse> readPost(@PathVariable("id") Long id){
-        return ResponseEntity.ok(postService.readPost(id));
+    @GetMapping("/{id}")
+    public ResponseEntity<PostResponse> getPost(@PathVariable("id") Long id){
+        return ResponseEntity.ok(postService.getPost(id));
     }
 
-    @PatchMapping("/posts/{id}")
-    public ResponseEntity<Void> updatePostContent(@PathVariable("id") Long id,
-                                                  @RequestHeader("Authorization") String password,
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> updatePostContent(@PathVariable("id") Long postId,
+                                                  @RequestHeader("Auth-Id") Long accountId,
+                                                  @RequestHeader("Auth-Password") String password,
                                                   @RequestBody PostUpdateRequest request) {
-        postService.updatePostContent(id, request, password);
+        postService.updatePostContent(postId, request, accountId, password);
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/posts/{id}")
-    public ResponseEntity<Void> deletePost(@PathVariable("id") Long id,
-                                           @RequestHeader("Authorization") String password){
-        postService.deletePost(id, password);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePost(@PathVariable("id") Long postId,
+                                           @RequestHeader("Auth-Id") Long accountId,
+                                           @RequestHeader("Auth-Password") String password){
+        postService.deletePost(postId, accountId, password);
         return ResponseEntity.noContent().build();
     }
 }
