@@ -35,8 +35,8 @@ public class PostService {
 
     @Transactional
     public PostResponse getPost(Long postId) {
+        postRepository.increaseViewCount(postId);
         Post post = findByPostId(postId);
-        post.increaseViewCount();
         return PostResponse.from(post);
     }
 
