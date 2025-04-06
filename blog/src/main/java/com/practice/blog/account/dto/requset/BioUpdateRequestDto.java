@@ -1,4 +1,4 @@
-package com.practice.blog.account.dto;
+package com.practice.blog.account.dto.requset;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;

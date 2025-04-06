@@ -35,10 +35,6 @@ public class Post extends BaseEntity {
         this.viewCount = 0L;
     }
 
-    public void increaseViewCount() {
-        viewCount++;
-    }
-
     public void changeContent(String newContent) {
         this.content = newContent;
     }
