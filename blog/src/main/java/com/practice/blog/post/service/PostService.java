@@ -5,11 +5,11 @@ import com.practice.blog.account.repository.AccountsRepository;
 import com.practice.blog.global.exception.BlogException;
 import com.practice.blog.global.exception.ExceptionCode;
 import com.practice.blog.post.domain.Post;
+import com.practice.blog.post.dto.summary.PostSummary;
 import com.practice.blog.post.dto.request.PostCreateRequest;
 import com.practice.blog.post.dto.request.PostUpdateRequest;
 import com.practice.blog.post.dto.response.PostResponse;
-import com.practice.blog.post.dto.response.PostsResponse;
-import com.practice.blog.post.dto.response.PostsResponses;
+import com.practice.blog.post.dto.response.PostListResponse;
 import com.practice.blog.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -41,10 +41,10 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public PostsResponses getAllPosts() {
-        List<PostsResponse> postsResponses = postRepository.findAllByOrderByCreatedAtDesc().stream()
-                .map(PostsResponse::from).toList();
-        return new PostsResponses(postsResponses, postRepository.count());
+    public PostListResponse getAllPosts() {
+        List<PostSummary> postSummaries = postRepository.findAllByOrderByCreatedAtDesc().stream()
+                .map(PostSummary::from).toList();
+        return new PostListResponse(postSummaries, postRepository.count());
     }
 
     @Transactional

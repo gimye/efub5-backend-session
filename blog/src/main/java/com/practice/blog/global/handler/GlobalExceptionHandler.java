@@ -1,6 +1,6 @@
 package com.practice.blog.global.handler;
 
-import com.practice.blog.account.dto.ErrorResponseDto;
+import com.practice.blog.account.dto.response.ErrorResponseDto;
 import com.practice.blog.global.exception.BlogException;
 import com.practice.blog.global.exception.ExceptionCode;
 import com.practice.blog.global.exception.dto.ExceptionResponse;

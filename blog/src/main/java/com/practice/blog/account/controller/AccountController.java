@@ -1,9 +1,9 @@
 package com.practice.blog.account.controller;
 
-import com.practice.blog.account.dto.AccountResponseDto;
-import com.practice.blog.account.dto.CreateAccountResponseDto;
-import com.practice.blog.account.dto.BioUpdateRequestDto;
-import com.practice.blog.account.dto.CreateAccountRequestDto;
+import com.practice.blog.account.dto.response.AccountResponseDto;
+import com.practice.blog.account.dto.response.CreateAccountResponseDto;
+import com.practice.blog.account.dto.requset.BioUpdateRequestDto;
+import com.practice.blog.account.dto.requset.CreateAccountRequestDto;
 import com.practice.blog.account.service.AccountsService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
