@@ -1,4 +1,4 @@
-package com.practice.blog.account.dto.requset;
+package com.practice.blog.account.dto.request;
 
 public class ExampleDto {
 

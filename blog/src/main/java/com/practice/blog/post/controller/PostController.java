@@ -22,7 +22,7 @@ public class PostController {
     @PostMapping
     public ResponseEntity<Void> createPost(@Valid @RequestBody PostCreateRequest request) {
         Long id = postService.createPost(request);
-        return ResponseEntity.created(URI.create("/post/"+id)).build();
+        return ResponseEntity.created(URI.create("/posts/"+id)).build();
     }
 
     // 게시물 목록 조회
