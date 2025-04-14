@@ -1,7 +1,7 @@
 package com.practice.blog.post.service;
 
 import com.practice.blog.account.entity.Account;
-import com.practice.blog.account.repository.AccountsRepository;
+import com.practice.blog.account.service.AccountsService;
 import com.practice.blog.global.exception.BlogException;
 import com.practice.blog.global.exception.ExceptionCode;
 import com.practice.blog.post.domain.Post;
@@ -22,12 +22,12 @@ import java.util.List;
 public class PostService {
 
     private final PostRepository postRepository;
-    private final AccountsRepository accountsRepository;
+    private final AccountsService accountsService;
 
     @Transactional
     public Long createPost(PostCreateRequest postCreateRequest) {
         Long accountId = postCreateRequest.accountId();
-        Account writerAccount = findByAccountId(accountId);
+        Account writerAccount = accountsService.findByAccountId(accountId);
         Post newPost = postCreateRequest.toEntity(writerAccount);
         postRepository.save(newPost);
         return newPost.getId();
@@ -50,7 +50,7 @@ public class PostService {
     @Transactional
     public void updatePostContent(Long postId, PostUpdateRequest request, Long accountId, String password) {
         Post post = findByPostId(postId);
-        Account account = findByAccountId(accountId);
+        Account account = accountsService.findByAccountId(accountId);
         authorizePostWriter(post, account, password);
         post.changeContent(request.content());
     }
@@ -58,19 +58,15 @@ public class PostService {
     @Transactional
     public void deletePost(Long postId, Long accountId, String password) {
         Post post = findByPostId(postId);
-        Account account = findByAccountId(accountId);
+        Account account = accountsService.findByAccountId(accountId);
         authorizePostWriter(post, account, password);
         postRepository.delete(post);
     }
 
-    private Post findByPostId(Long postId) {
+    @Transactional(readOnly = true)
+    public Post findByPostId(Long postId) {
         return postRepository.findById(postId)
                 .orElseThrow(()-> new BlogException(ExceptionCode.POST_NOT_FOUND));
-    }
-
-    private Account findByAccountId(Long accountId) {
-        return accountsRepository.findByAccountId(accountId)
-                .orElseThrow(()-> new BlogException(ExceptionCode.ACCOUNT_NOT_FOUND));
     }
 
     private void authorizePostWriter(Post post, Account account, String password) {
