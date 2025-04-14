@@ -15,13 +15,13 @@ import java.util.stream.Collectors;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class AccountCommentResponse {
-    private String writerNickname;
+    private String accountNickname;
     private List<CommentResponse> accountCommentList;
     private Long count;
 
     public static AccountCommentResponse of(Account account, List<Comment> commentList) {
         return AccountCommentResponse.builder()
-                .writerNickname(account.getNickname())
+                .accountNickname(account.getNickname())
                 .accountCommentList(commentList.stream().map(CommentResponse::of).collect(Collectors.toList()))
                 .count((long) commentList.size())
                 .build();
