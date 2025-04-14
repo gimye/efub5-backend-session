@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class PostCommentResponse {
-    private Long postId;
-    private List<CommentResponse> postCommentList;
-    private Long count;
+    private final Long postId;
+    private final List<CommentResponse> postCommentList;
+    private final Long count;
 
     public static PostCommentResponse of(Long postId, List<Comment> commentList) {
         return PostCommentResponse.builder()

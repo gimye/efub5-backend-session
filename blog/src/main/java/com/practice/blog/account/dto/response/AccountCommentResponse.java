@@ -15,9 +15,9 @@ import java.util.stream.Collectors;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class AccountCommentResponse {
-    private String accountNickname;
-    private List<CommentResponse> accountCommentList;
-    private Long count;
+    private final String accountNickname;
+    private final List<CommentResponse> accountCommentList;
+    private final Long count;
 
     public static AccountCommentResponse of(Account account, List<Comment> commentList) {
         return AccountCommentResponse.builder()
