@@ -2,7 +2,6 @@ package com.practice.blog.comment.domain;
 
 import com.practice.blog.account.entity.Account;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
