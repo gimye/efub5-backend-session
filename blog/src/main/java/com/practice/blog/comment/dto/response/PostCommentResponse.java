@@ -1,7 +1,6 @@
-package com.practice.blog.post.dto.response;
+package com.practice.blog.comment.dto.response;
 
 import com.practice.blog.comment.domain.Comment;
-import com.practice.blog.comment.dto.response.CommentResponse;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
