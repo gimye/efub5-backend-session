@@ -2,7 +2,7 @@ package com.practice.blog.comment.service;
 
 import com.practice.blog.account.dto.response.AccountCommentResponse;
 import com.practice.blog.account.entity.Account;
-import com.practice.blog.account.service.AccountsService;
+import com.practice.blog.account.service.AccountService;
 import com.practice.blog.comment.domain.Comment;
 import com.practice.blog.comment.domain.CommentLike;
 import com.practice.blog.comment.dto.request.CommentRequest;
@@ -25,7 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CommentService {
 
-    private final AccountsService accountsService;
+    private final AccountService accountService;
     private final PostService postService;
     private final CommentRepository commentRepository;
     private final CommentLikeRepository commentLikeRepository;
@@ -33,7 +33,7 @@ public class CommentService {
     @Transactional
     public Long createComment(Long postId, CommentRequest commentRequest) {
         Long accountId = commentRequest.getAccountId();
-        Account writer = accountsService.findByAccountId(accountId);
+        Account writer = accountService.findByAccountId(accountId);
         Post post = postService.findByPostId(postId);
         Comment newComment = commentRequest.toEntity(writer, post);
         commentRepository.save(newComment);
@@ -49,7 +49,7 @@ public class CommentService {
 
     @Transactional(readOnly=true)
     public AccountCommentResponse getAccountCommentList(Long accountId) {
-        Account account = accountsService.findByAccountId(accountId);
+        Account account = accountService.findByAccountId(accountId);
         List<Comment> commentList = commentRepository.findAllByWriterAccountIdOrderByCreatedAtDesc(accountId);
         return AccountCommentResponse.of(account, commentList);
     }
@@ -58,7 +58,7 @@ public class CommentService {
     @Transactional
     public CommentResponse updateComment(Long commentId, CommentUpdateRequest request, Long accountId, String password) {
         Comment comment = findByCommentId(commentId);
-        Account account = accountsService.findByAccountId(accountId);
+        Account account = accountService.findByAccountId(accountId);
         authorizeCommentWriter(comment, account, password);
         comment.updateContent(request.getContent());
         return CommentResponse.of(comment);
@@ -68,7 +68,7 @@ public class CommentService {
     @Transactional
     public void deleteComment(Long commentId, Long accountId, String password) {
         Comment comment = findByCommentId(commentId);
-        Account account = accountsService.findByAccountId(accountId);
+        Account account = accountService.findByAccountId(accountId);
         authorizeCommentWriter(comment, account, password);
         commentRepository.delete(comment);
     }
@@ -77,7 +77,7 @@ public class CommentService {
     @Transactional
     public void likeComment(Long commentId, Long accountId) {
         Comment comment = findByCommentId(commentId);
-        Account account = accountsService.findByAccountId(accountId);
+        Account account = accountService.findByAccountId(accountId);
         // 좋아요가 이미 존재하는지 여부 확인
         if (commentLikeRepository.existsByCommentAndAccount(comment, account)) {
             throw new BlogException(ExceptionCode.LIKE_ALREADY_EXISTS);
@@ -93,7 +93,7 @@ public class CommentService {
     @Transactional
     public void unlikeComment(Long commentId, Long accountId) {
         Comment comment = findByCommentId(commentId);
-        Account account = accountsService.findByAccountId(accountId);
+        Account account = accountService.findByAccountId(accountId);
         CommentLike like = commentLikeRepository.findByCommentAndAccount(comment, account)
                 .orElseThrow(() -> new BlogException(ExceptionCode.LIKE_NOT_FOUND));
         commentLikeRepository.delete(like);
