@@ -2,7 +2,7 @@ package com.practice.blog.follow.dto.request;
 
 import com.practice.blog.account.entity.Account;
 import com.practice.blog.follow.domain.Follow;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FollowRequestDto {
 
-    @NotBlank
+    @NotNull
     private Long followingId;
 
     public Follow toEntity(Account follower, Account following){
