@@ -12,12 +12,12 @@ public class FollowStatusResponseDto {
     private String email;
     private String status;
 
-    public static FollowStatusResponseDto of(Account account, Boolean isFollowed){
+    public static FollowStatusResponseDto of(Account account, String status){
         return FollowStatusResponseDto.builder()
                 .accountId(account.getAccountId())
                 .nickname(account.getNickname())
                 .email(account.getEmail())
-                .status(isFollowed ? "FOLLOWED" : "UNFOLLOWED")
+                .status(status)
                 .build();
     }
 }

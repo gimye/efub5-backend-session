@@ -7,6 +7,8 @@ import com.practice.blog.follow.dto.request.FollowRequestDto;
 import com.practice.blog.follow.dto.response.FollowListResponseDto;
 import com.practice.blog.follow.dto.response.FollowStatusResponseDto;
 import com.practice.blog.follow.repository.FollowRepository;
+import com.practice.blog.global.exception.BlogException;
+import com.practice.blog.global.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,10 +27,13 @@ public class FollowService {
     public FollowStatusResponseDto addFollow(Long accountId, FollowRequestDto followRequestDto){
         Account follower = accountService.findByAccountId(accountId);
         Account following = accountService.findByAccountId(followRequestDto.getFollowingId());
+        if (followRepository.existsByFollowerAndFollowing(follower, following)) {
+            throw new BlogException(ExceptionCode.ALREADY_FOLLOWED);
+        }
         followRepository.save(followRequestDto.toEntity(follower, following));
-        boolean isFollowed = followRepository.existsByFollowerAndFollowing(follower, following);
+        String status = FollowStatus(follower, following);
 
-        return FollowStatusResponseDto.of(following, isFollowed);
+        return FollowStatusResponseDto.of(following, status);
     }
 
     // 팔로우 여부 확인
@@ -36,9 +41,9 @@ public class FollowService {
     public FollowStatusResponseDto isFollowing(Long followerId, Long followingId){
         Account follower = accountService.findByAccountId(followerId);
         Account following = accountService.findByAccountId(followingId);
-        boolean isFollowed = followRepository.existsByFollowerAndFollowing(follower, following);
+        String status = FollowStatus(follower, following);
 
-        return FollowStatusResponseDto.of(following, isFollowed);
+        return FollowStatusResponseDto.of(following, status);
     }
 
     // 팔로우 & 팔로잉 리스트 전체 조회
@@ -56,10 +61,18 @@ public class FollowService {
         Account follower = accountService.findByAccountId(accountId);
         Account following = accountService.findByAccountId(followingId);
         Follow findFollow = followRepository.findByFollowerAndFollowing(follower, following);
+        if (findFollow == null) {
+            throw new BlogException(ExceptionCode.FOLLOW_NOT_FOUND);
+        }
         followRepository.delete(findFollow);
+        String status = FollowStatus(follower, following);
 
+        return FollowStatusResponseDto.of(following, status);
+    }
+
+    // 팔로우 상태 반환용 - 분리
+    public String FollowStatus(Account follower, Account following){
         boolean isFollowed = followRepository.existsByFollowerAndFollowing(follower, following);
-
-        return FollowStatusResponseDto.of(following, isFollowed);
+        return isFollowed ? "FOLLOWED" : "UNFOLLOWED";
     }
 }
