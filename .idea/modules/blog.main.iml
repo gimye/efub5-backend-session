@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module external.linked.project.id="blog:main" external.linked.project.path="$MODULE_DIR$/../../blog" external.root.project.path="$MODULE_DIR$/../../blog" external.system.id="GRADLE" external.system.module.group="com.practice" external.system.module.type="sourceSet" external.system.module.version="0.0.1-SNAPSHOT" type="JAVA_MODULE" version="4">
-  <component name="AdditionalModuleElements">
-    <content url="file://$MODULE_DIR$/../../blog/build/generated/sources/annotationProcessor/java/main">
-      <sourceFolder url="file://$MODULE_DIR$/../../blog/build/generated/sources/annotationProcessor/java/main" isTestSource="false" generated="true" />
-    </content>
-  </component>
   <component name="FacetManager">
     <facet external-system-id="GRADLE" type="web" name="Web">
       <configuration>
@@ -18,12 +13,13 @@
     <content url="file://$MODULE_DIR$/../../blog/build/generated/sources/annotationProcessor/java/main">
       <sourceFolder url="file://$MODULE_DIR$/../../blog/build/generated/sources/annotationProcessor/java/main" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../blog/build/generated/sources/annotationProcessor/java/main" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../blog/build/generated/sources/annotationProcessor/java/main" isTestSource="false" generated="true" />
     </content>
     <content url="file://$MODULE_DIR$/../../blog/src/main">
       <sourceFolder url="file://$MODULE_DIR$/../../blog/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../blog/src/main/resources" type="java-resource" />
     </content>
-    <orderEntry type="jdk" jdkName="17" jdkType="JavaSDK" />
+    <orderEntry type="jdk" jdkName="ms-17" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.projectlombok:lombok:1.18.36" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-data-jpa:3.3.10" level="project" />
