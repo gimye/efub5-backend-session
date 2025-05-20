@@ -37,16 +37,22 @@ public class FollowService {
 
     }
 
-//    // 팔로우 여부 확인
-//    public FollowStatusResponseDto isFollowing(Long followerId, Long followingId){
-//
-//    }
-//
-//    // 팔로우 & 팔로잉 리스트 전체 조회
-//    public FollowListResponseDto getFollowList(Long accountId) {
-//
-//    }
-//
+    // 팔로우 여부 확인
+    public FollowStatusResponseDto isFollowing(Long followerId, Long followingId){
+        Account follower = accountService.findByAccountId(followerId);
+        Account following = accountService.findByAccountId(followingId);
+        String status = FollowStatus(follower, following);
+        return FollowStatusResponseDto.of(following, status);
+    }
+
+    // 팔로우 & 팔로잉 리스트 전체 조회
+    public FollowListResponseDto getFollowList(Long accountId) {
+        Account account = accountService.findByAccountId(accountId);
+        List<Follow> followers = followRepository.findAllByFollowing(account);
+        List<Follow> followings = followRepository.findAllByFollower(account);
+        return FollowListResponseDto.of(followers, followings);
+    }
+
 //    // 팔로우 삭제
 //    public FollowStatusResponseDto deleteFollow(Long accountId, Long followingId){
 //
@@ -55,6 +61,6 @@ public class FollowService {
     // 팔로우 상태 반환용 - 분리
     public String FollowStatus(Account follower, Account following){
         boolean isFollowed = followRepository.existsByFollowerAndFollowing(follower, following);
-        return isFollowed ? "FOLLOW" : "UNFOLLOWf";
+        return isFollowed ? "FOLLOW" : "UNFOLLOW";
     }
 }

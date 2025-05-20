@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class FollowController {
 
     private final FollowService followService;
+    private final AccountService accountService;
 
     // 팔로우 걸기(추가)
     @PostMapping("/{accountId}")
@@ -27,16 +28,23 @@ public class FollowController {
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
 
-//    // 팔로잉 & 팔로워 리스트 조회
-//    public ResponseEntity<FollowListResponseDto> getFollowList(){
-//        return ResponseEntity.ok(responseDto);
-//    }
+    // 팔로잉 & 팔로워 리스트 조회
+    @GetMapping("/{accountId}")
+    public ResponseEntity<FollowListResponseDto> getFollowList(@PathVariable("accountId") Long accountId) {
+        accountService.findByAccountId(accountId);
+        FollowListResponseDto responseDto = followService.getFollowList(accountId);
+        return ResponseEntity.ok(responseDto);
+    }
 
-//    // 팔로우 여부 조회
-//    public ResponseEntity<FollowStatusResponseDto> searchAccount(){
-//        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
-//    }
-//
+    // 팔로우 여부 조회
+    @GetMapping("/{accountId}/search")
+    public ResponseEntity<FollowStatusResponseDto> searchAccount(@PathVariable("accountId") Long accountId,
+                                                                 @RequestParam("email") String email) {
+        Account searchAccount = accountService.findByEmail(email);
+        FollowStatusResponseDto responseDto = followService.isFollowing(accountId, searchAccount.getAccountId());
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
+    }
+
 //    // 팔로우 취소
 //    public ResponseEntity<FollowStatusResponseDto> deleteFollow(){
 //        return ResponseEntity.ok(responseDto);

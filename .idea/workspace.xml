@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4379da3e-c273-4428-8fdc-28d4ccbb8d92" name="변경" comment="Feat: comment 조회 api">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/blog/src/main/java/com/practice/blog/follow/controller/FollowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/blog/src/main/java/com/practice/blog/follow/controller/FollowController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog/src/main/java/com/practice/blog/follow/domain/Follow.java" beforeDir="false" afterPath="$PROJECT_DIR$/blog/src/main/java/com/practice/blog/follow/domain/Follow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog/src/main/java/com/practice/blog/follow/dto/request/FollowRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/blog/src/main/java/com/practice/blog/follow/dto/request/FollowRequestDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog/src/main/java/com/practice/blog/follow/dto/response/FollowListResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/blog/src/main/java/com/practice/blog/follow/dto/response/FollowListResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog/src/main/java/com/practice/blog/follow/dto/response/FollowStatusResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/blog/src/main/java/com/practice/blog/follow/dto/response/FollowStatusResponseDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/blog/src/main/java/com/practice/blog/follow/repository/FollowRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/blog/src/main/java/com/practice/blog/follow/repository/FollowRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/blog/src/main/java/com/practice/blog/follow/service/FollowService.java" beforeDir="false" afterPath="$PROJECT_DIR$/blog/src/main/java/com/practice/blog/follow/service/FollowService.java" afterDir="false" />
     </list>
@@ -101,7 +98,7 @@
       <workItem from="1746589321177" duration="5271000" />
       <workItem from="1746754610104" duration="6000" />
       <workItem from="1747734935379" duration="1436000" />
-      <workItem from="1747737160846" duration="1350000" />
+      <workItem from="1747737160846" duration="2879000" />
     </task>
     <task id="LOCAL-00001" summary="Feat: comment 조회 api">
       <option name="closed" value="true" />
