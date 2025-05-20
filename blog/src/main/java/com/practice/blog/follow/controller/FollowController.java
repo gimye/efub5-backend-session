@@ -1,32 +1,37 @@
 package com.practice.blog.follow.controller;
 
-//import com.practice.blog.account.entity.Account;
-//import com.practice.blog.account.service.AccountService;
-//import com.practice.blog.follow.dto.request.FollowRequestDto;
-//import com.practice.blog.follow.dto.response.FollowListResponseDto;
-//import com.practice.blog.follow.dto.response.FollowStatusResponseDto;
-//import com.practice.blog.follow.service.FollowService;
-//import jakarta.validation.Valid;
-//import lombok.RequiredArgsConstructor;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.web.bind.annotation.*;
-//
-//@RestController
-//@RequestMapping("/follows")
-//@RequiredArgsConstructor
-//public class FollowController {
-//
-//    // 팔로우 걸기(추가)
-//    public ResponseEntity<FollowStatusResponseDto> addFollow(){
-//        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
-//    }
-//
+import com.practice.blog.account.entity.Account;
+import com.practice.blog.account.service.AccountService;
+import com.practice.blog.follow.dto.request.FollowRequestDto;
+import com.practice.blog.follow.dto.response.FollowListResponseDto;
+import com.practice.blog.follow.dto.response.FollowStatusResponseDto;
+import com.practice.blog.follow.service.FollowService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/follows")
+@RequiredArgsConstructor
+public class FollowController {
+
+    private final FollowService followService;
+
+    // 팔로우 걸기(추가)
+    @PostMapping("/{accountId}")
+    public ResponseEntity<FollowStatusResponseDto> addFollow(@PathVariable("accountId") Long accountId,
+                                                             @RequestBody FollowRequestDto followRequestDto) {
+        FollowStatusResponseDto responseDto = followService.addFollow(accountId, followRequestDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
+    }
+
 //    // 팔로잉 & 팔로워 리스트 조회
 //    public ResponseEntity<FollowListResponseDto> getFollowList(){
 //        return ResponseEntity.ok(responseDto);
 //    }
-//
+
 //    // 팔로우 여부 조회
 //    public ResponseEntity<FollowStatusResponseDto> searchAccount(){
 //        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
@@ -36,5 +41,5 @@ package com.practice.blog.follow.controller;
 //    public ResponseEntity<FollowStatusResponseDto> deleteFollow(){
 //        return ResponseEntity.ok(responseDto);
 //    }
-//
-//}
+
+}
