@@ -45,9 +45,12 @@ public class FollowController {
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
 
-//    // 팔로우 취소
-//    public ResponseEntity<FollowStatusResponseDto> deleteFollow(){
-//        return ResponseEntity.ok(responseDto);
-//    }
+    // 팔로우 취소
+    @DeleteMapping("/{accountId}")
+    public ResponseEntity<FollowStatusResponseDto> deleteFollow(@PathVariable("accountId") Long accountId,
+                                                                @RequestParam("followingId") Long followingId) {
+        FollowStatusResponseDto responseDto = followService.deleteFollow(accountId, followingId);
+        return ResponseEntity.ok(responseDto);
+    }
 
 }

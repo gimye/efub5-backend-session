@@ -53,10 +53,17 @@ public class FollowService {
         return FollowListResponseDto.of(followers, followings);
     }
 
-//    // 팔로우 삭제
-//    public FollowStatusResponseDto deleteFollow(Long accountId, Long followingId){
-//
-//    }
+    // 팔로우 삭제
+    public FollowStatusResponseDto deleteFollow(Long accountId, Long followingId){
+        Account follower = accountService.findByAccountId(accountId);
+        Account following = accountService.findByAccountId(followingId);
+        Follow findFollow = followRepository.findByFollowerAndFollowing(follower, following)
+                .orElseThrow(()-> new BlogException(ExceptionCode.FOLLOW_NOT_FOUND));
+        followRepository.delete(findFollow);
+        String status = FollowStatus(follower, following);
+        return FollowStatusResponseDto.of(following, status);
+
+    }
 
     // 팔로우 상태 반환용 - 분리
     public String FollowStatus(Account follower, Account following){
