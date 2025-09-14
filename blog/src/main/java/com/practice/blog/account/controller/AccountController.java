@@ -18,6 +18,20 @@ public class AccountController {
 
     private final AccountService accountService;
 
+    // Redis에서 id로 이메일 조회
+    @GetMapping("/redis/{accountId}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public String getEmailByIdfromRedis(@PathVariable Long accountId){
+        return accountService.findEmailByIdFromRedis(accountId);
+    }
+
+    // Mongodb에서  id로 닉네임 조회
+    @GetMapping("/mongodb/{accountId}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public String getNicknameByIdfromMongod(@PathVariable Long accountId){
+        return accountService.findNicknameByIdFromMongo(accountId);
+    }
+
     // 회원 조회: GET /accounts/{accountId}
     @GetMapping("/{accountId}")
     public ResponseEntity<AccountResponseDto> getAccount(@PathVariable("accountId") Long accountId) {
